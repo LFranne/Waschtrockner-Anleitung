@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#253C28" />
+  <title>Ab ins Grüne · Waschtrockner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --graphite:#202829;
+      --dust:#F2EFED;
+      --white:#FFFFFF;
+      --black:#000000;
+      --wald:#253C28;
+      --wald2:#4A613C;
+      --wald3:#7C8E51;
+      --fichte:#BBD034;
+      --gold:#A17621;
+      --gold2:#D4A12C;
+      --gold3:#FFD962;
+      --line:rgba(37,60,40,.18);
+      --muted:#5F665F;
+      --radius:14px;
+      --shadow:0 14px 34px rgba(32,40,41,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--dust);
+      color:var(--graphite);
+      font-family:"Asap Condensed", Arial, sans-serif;
+      font-size:17px;
+      line-height:1.48;
+    }
+    .wrap{width:min(760px,100%);margin:0 auto;padding:0 16px 40px}
+    .brand-header{
+      display:flex;
+      align-items:center;
+      margin:0 -16px;
+      padding:28px 24px;
+      background:var(--white);
+    }
+    .brand-logo{
+      display:block;
+      width:min(292px,100%);
+      height:auto;
+    }
+    .hero{
+      position:relative;
+      margin:0 -16px 16px;
+      padding:34px 24px 30px;
+      background:var(--wald);
+      color:var(--white);
+      border:none;
+      border-radius:0 0 28px 28px;
+      box-shadow:var(--shadow);
+      text-align:left;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"AB INS GRÜNE · GÄSTEINFO";
+      display:block;
+      margin-bottom:18px;
+      color:var(--fichte);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.18em;
+    }
+    .icon{display:none}
+    h1{
+      font-family:"Zilla Slab", Georgia, serif;
+      font-size:clamp(38px,9vw,58px);
+      line-height:.98;
+      margin:0 0 10px;
+      letter-spacing:-.02em;
+      font-weight:700;
+    }
+    .subtitle{margin:0;max-width:520px;color:rgba(255,255,255,.82);font-size:18px;font-weight:500}
+    .subtitle::after{
+      content:"Digital hilfreich. Schnell erklärt.";
+      display:block;
+      margin-top:15px;
+      color:var(--gold3);
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:.04em;
+    }
+    .langs{
+      display:flex;gap:8px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none;
+      position:sticky;top:0;z-index:20;
+      background:linear-gradient(var(--dust) 78%,rgba(242,239,237,0));
+    }
+    .langs::-webkit-scrollbar{display:none}
+    .lang-btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      border:1px solid var(--wald2);background:rgba(255,255,255,.72);color:var(--wald);
+      padding:8px 10px;border-radius:7px;font:700 18px "Asap Condensed",Arial,sans-serif;
+      min-width:44px;min-height:44px;flex:0 0 auto;
+      letter-spacing:.02em;white-space:nowrap;cursor:pointer;transition:.18s ease;
+    }
+    .lang-btn:hover{background:var(--white)}
+    .lang-flag{display:block;width:22px;height:15px;flex:none;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(32,40,41,.16)}
+    @media (max-width:480px){
+      .lang-btn{flex:1 0 0;flex-direction:column;gap:4px;padding:8px 4px}
+    }
+    .lang-btn.active{border-color:var(--wald);background:var(--wald);color:var(--white);box-shadow:inset 0 -3px 0 var(--fichte)}
+    .card{
+      margin-top:12px;background:rgba(255,255,255,.94);border:1px solid var(--line);
+      border-radius:var(--radius);padding:18px;box-shadow:0 5px 18px rgba(32,40,41,.045);
+    }
+    .card h2{font-family:"Zilla Slab",Georgia,serif;margin:0 0 14px;font-size:24px;color:var(--wald);letter-spacing:-.01em}
+    .steps{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+    .steps li{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}
+    .num,.reload-num{
+      width:36px;height:36px;border-radius:50%;background:var(--wald);color:var(--white);
+      display:grid;place-items:center;font-weight:700;border:2px solid var(--fichte)
+    }
+    .start-pause-symbol{display:block;width:18px;height:18px}
+    .step-title{font-weight:700;color:var(--wald);margin-bottom:1px}
+    .step-text{color:var(--muted);font-size:16px}
+    .notice{
+      display:flex;gap:10px;align-items:flex-start;background:#FFF8DF;border:none;
+      border-left:4px solid var(--gold2);border-radius:8px;padding:13px 14px;margin-top:14px;color:#594715;font-size:15px
+    }
+    .programs{display:grid;gap:8px;margin-top:8px}
+    .program{
+      border:1px solid var(--line);border-radius:9px;padding:12px 13px;background:var(--dust)
+    }
+    .program-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+    .program-name{font-weight:700;color:var(--wald)}
+    .program-meta{font-size:13px;color:var(--gold);font-weight:700;white-space:nowrap}
+    .program-desc{font-size:15px;color:var(--muted);margin-top:3px}
+    .symbol{display:inline-grid;place-items:center;min-width:34px;height:34px;border:1px solid var(--line);border-radius:8px;background:var(--white);font-size:20px;font-weight:700;margin-right:8px;vertical-align:middle}
+    .compat{display:grid;gap:9px;margin-top:8px}
+    .compat-row{border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--dust)}
+    .compat-name{font-weight:700;color:var(--wald);margin-bottom:7px}
+    .chips{display:flex;flex-wrap:wrap;gap:6px}
+    .chip{font-size:13px;font-weight:600;padding:5px 8px;border-radius:5px;background:#E7EAD9;color:var(--wald)}
+    .chip.no{background:#E9E6E3;color:#77716B;text-decoration:line-through;text-decoration-thickness:1px}
+    .reload-steps{display:grid;gap:10px}
+    .reload-step{display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start}
+    .actions{display:grid;gap:10px;margin-top:14px}
+    .btn{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:8px;padding:13px 16px;font-weight:700;border:1px solid var(--wald);transition:.18s ease}
+    .btn.primary{background:var(--wald);color:var(--white);border-color:var(--wald);box-shadow:inset 0 -4px 0 var(--fichte)}
+    .btn.primary:hover{background:var(--wald2)}
+    .btn.secondary{background:var(--white);color:var(--wald)}
+    details.card{padding:0;overflow:hidden}
+    details.card > summary{
+      list-style:none;cursor:pointer;padding:17px 18px;
+      font-family:"Zilla Slab",Georgia,serif;font-size:23px;font-weight:700;color:var(--wald);
+      letter-spacing:-.01em;display:flex;align-items:center;justify-content:space-between;gap:12px
+    }
+    details.card > summary::-webkit-details-marker{display:none}
+    details.card > summary::after{
+      content:"";width:28px;height:28px;border-radius:50%;flex:0 0 28px;
+      background-color:var(--wald);color:var(--white);
+      background-image:linear-gradient(currentColor,currentColor),linear-gradient(currentColor,currentColor);
+      background-size:12px 2px,2px 12px;background-position:center;background-repeat:no-repeat;
+      transition:background-color .18s ease,color .18s ease;
+    }
+    details.card[open] > summary{background:#FAF8F6}
+    details.card[open] > summary::after{background-color:var(--fichte);color:var(--wald);background-size:12px 2px,0 0}
+    .details-body{padding:16px 18px 18px;border-top:1px solid var(--line)}
+    footer{color:var(--muted);text-align:center;padding:24px 8px 0;font-size:13px}
+    footer::before{content:"AB INS GRÜNE";display:block;color:var(--wald);font-family:"Zilla Slab",Georgia,serif;font-size:18px;font-weight:700;margin-bottom:3px}
+    [hidden]{display:none!important}
+    @media (min-width:720px){
+      .wrap{padding-left:24px;padding-right:24px}
+      .brand-header{margin-left:-24px;margin-right:-24px;padding-left:34px;padding-right:34px}
+      .hero{margin-left:-24px;margin-right:-24px;padding-left:34px;padding-right:34px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="brand-header">
+      <!-- Unverändertes Original: AIG_logotype_signet_links_wald.svg -->
+      <img class="brand-logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iRWJlbmVfNyIgZGF0YS1uYW1lPSJFYmVuZSA3IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NTkgMTAzIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjMjUzYzI4OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM3Ny41OCw3NC4xN1YxNy40OGgxOS44NGMxLjU3LDAsMi44My0xLjI3LDIuODMtMi44M3MtMS4yNy0yLjgzLTIuODMtMi44M2gtMTkuODRjLTMuMTMsMC01LjY3LDIuNTQtNS42Nyw1LjY3djY4LjAzaDBjMCwzLjEzLDIuNTQsNS42Nyw1LjY3LDUuNjdoMTcuMDFjMy4xMywwLDUuNjctMi41NCw1LjY3LTUuNjdoMHYtNDIuNTJoLS4wMWMtLjAxLS40Mi0uMTEtLjg0LS4zMy0xLjI0LS43NC0xLjM4LTIuNDYtMS45LTMuODQtMS4xNWwtMTIuMjgsNi42MWMtMS4zOC43NC0xLjksMi40Ni0xLjE1LDMuODQuNTEuOTUsMS40OSwxLjQ5LDIuNSwxLjQ5LjQ1LDAsLjkxLS4xMSwxLjM0LS4zNGw4LjEtNC4zNnYzNy42OGgtMTcuMDF2LTExLjM0WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDM0LjI3LDExLjgxaC0xNy4wMWMtMy4xMywwLTUuNjcsMi41NC01LjY3LDUuNjd2NzAuODdjMCwxLjU3LDEuMjcsMi44MywyLjgzLDIuODNzMi44My0xLjI3LDIuODMtMi44M3YtNTIuNzFsMTEuMDUtNS45NCw1LjcxLDU4LjkzYy4xNCwxLjQ1LDEuMzYsMi41NiwyLjgyLDIuNTYsMS42NywwLDIuOTgtMS40NCwyLjgyLTMuMTFsLTUuOTQtNjEuMyw0LjczLTIuNTRjLjk1LS41MSwxLjQ4LTEuNDksMS40OC0yLjQ5aC4wMXYtNC4yNmMwLTMuMTMtMi41NC01LjY3LTUuNjctNS42N1pNNDM0LjI3LDIwLjA1bC0xNy4wMSw5LjE1di0xMS43MmgxNy4wMXYyLjU2WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDY1LjQ1LDIzLjE1YzEuNTcsMCwyLjgzLTEuMjcsMi44My0yLjgzdi01LjY3YzAtMS41Ny0xLjI3LTIuODMtMi44My0yLjgzcy0yLjgzLDEuMjctMi44MywyLjgzdjUuNjdjMCwxLjU3LDEuMjcsMi44MywyLjgzLDIuODNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNDQuMzUsNDUuODNoMGMtMS41NywwLTIuODMsMS4yNy0yLjgzLDIuODN2NS42N2MwLDEuNTcsMS4yNywyLjgzLDIuODMsMi44M2gwYzEuNTcsMCwyLjgzLTEuMjcsMi44My0yLjgzdi01LjY3YzAtMS41Ny0xLjI3LTIuODMtMi44My0yLjgzWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzU3Ljc0LDQ1LjgzYy0xLjU3LDAtMi44MywxLjI3LTIuODMsMi44M3Y1LjY3YzAsMS41NywxLjI3LDIuODMsMi44MywyLjgzczIuODMtMS4yNywyLjgzLTIuODN2LTUuNjdjMC0xLjU3LTEuMjctMi44My0yLjgzLTIuODNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00NzYuNzksMTEuODFjLTEuNTcsMC0yLjgzLDEuMjctMi44MywyLjgzdjcwLjg3aC0xNy4wMVYxNC42NWMwLTEuNTctMS4yNy0yLjgzLTIuODMtMi44M3MtMi44MywxLjI3LTIuODMsMi44M3Y3MC44N2gwYzAsMy4xMywyLjU0LDUuNjcsNS42Nyw1LjY3aDE3LjAxYzMuMTMsMCw1LjY3LTIuNTQsNS42Ny01LjY3aDBWMTQuNjVjMC0xLjU3LTEuMjctMi44My0yLjgzLTIuODNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01MTYuNDgsMTEuODFjLTEuNTcsMC0yLjgzLDEuMjctMi44MywyLjgzdjcuNDZsLTE4LjUtOS45NXMtLjA3LS4wMy0uMTEtLjA1Yy0uMDktLjA1LS4xOS0uMDgtLjI5LS4xMi0uMDgtLjAzLS4xNy0uMDYtLjI1LS4wOC0uMDktLjAyLS4xOC0uMDQtLjI3LS4wNS0uMS0uMDItLjItLjAzLS4zLS4wMy0uMDQsMC0uMDgtLjAxLS4xMi0uMDFoMHMtLjA5LjAxLS4xMy4wMWMtLjEsMC0uMi4wMS0uMjkuMDMtLjA5LjAxLS4xOC4wMy0uMjcuMDUtLjA5LjAyLS4xNy4wNS0uMjUuMDgtLjA5LjAzLS4xOC4wNy0uMjYuMTEtLjA4LjA0LS4xNS4wOC0uMjMuMTItLjA4LjA1LS4xNi4xLS4yMy4xNS0uMDcuMDUtLjE0LjExLS4yMS4xNy0uMDcuMDYtLjE0LjEzLS4yLjItLjA2LjA2LS4xMS4xMy0uMTcuMi0uMDYuMDgtLjEyLjE3LS4xNy4yNS0uMDIuMDQtLjA1LjA3LS4wNy4xMS0uMDIuMDQtLjAzLjA3LS4wNS4xMS0uMDUuMDktLjA4LjE5LS4xMi4yOS0uMDMuMDgtLjA2LjE3LS4wOC4yNS0uMDIuMDktLjA0LjE4LS4wNS4yNy0uMDIuMS0uMDMuMi0uMDMuMywwLC4wNC0uMDEuMDgtLjAxLjEydjczLjdjMCwxLjU3LDEuMjcsMi44MywyLjgzLDIuODNoMGMxLjU3LDAsMi44My0xLjI3LDIuODMtMi44M1YxOS4zOWwxNy4wMSw5LjE1djU5LjhjMCwxLjU3LDEuMjcsMi44MywyLjgzLDIuODNzMi44My0xLjI3LDIuODMtMi44M1YxNC42NWMwLTEuNTctMS4yNy0yLjgzLTIuODMtMi44M1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU1Ni4xNiw1Ny4xN2MtMS41NywwLTIuODMsMS4yNy0yLjgzLDIuODN2MjUuNTFoLTE3LjAxdi00NC44M2w4LjA5LDQuNDFjLjQzLjI0LjkuMzUsMS4zNS4zNSwxLDAsMS45OC0uNTMsMi40OS0xLjQ4Ljc1LTEuMzcuMjQtMy4xLTEuMTMtMy44NWwtMTAuOC01Ljg5di0xNi43NGgxOS44NGMxLjU3LDAsMi44My0xLjI3LDIuODMtMi44M3MtMS4yNy0yLjgzLTIuODMtMi44M2gtMTkuODRjLTMuMTMsMC01LjY3LDIuNTQtNS42Nyw1LjY3djY4LjAzaDBjMCwzLjEzLDIuNTQsNS42Nyw1LjY3LDUuNjdoMTcuMDFjMy4xMywwLDUuNjctMi41NCw1LjY3LTUuNjdoMHYtMjUuNTFjMC0xLjU3LTEuMjctMi44My0yLjgzLTIuODNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNjEuMzYsMTEuODFoMGMtMS41NywwLTIuODMsMS4yNy0yLjgzLDIuODN2NzMuN2MwLDEuNTcsMS4yNywyLjgzLDIuODMsMi44M2gwYzEuNTcsMCwyLjgzLTEuMjcsMi44My0yLjgzVjE0LjY1YzAtMS41Ny0xLjI3LTIuODMtMi44My0yLjgzWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzM3Ljg5LDExLjgxaC0xNy4wMWMtMy4xMywwLTUuNjcsMi41NC01LjY3LDUuNjd2MTguNDJoLjAxYzAsMS4wMS41MiwxLjk4LDEuNDYsMi40OWwyMS4yLDExLjU3djM1LjU1aC0xNy4wMXYtMjUuNTFjMC0xLjU3LTEuMjctMi44My0yLjgzLTIuODNzLTIuODMsMS4yNy0yLjgzLDIuODN2MjUuNTFjMCwzLjEzLDIuNTQsNS42Nyw1LjY3LDUuNjdoMTcuMDFjMy4xMywwLDUuNjctMi41NCw1LjY3LTUuNjd2LTM3LjIzaC0uMDFjMC0xLjAxLS41Mi0xLjk4LTEuNDYtMi40OWwtMjEuMi0xMS41N3YtMTYuNzRoMTcuMDF2OC41YzAsMS41NywxLjI3LDIuODMsMi44MywyLjgzczIuODMtMS4yNywyLjgzLTIuODN2LTguNWMwLTMuMTMtMi41NC01LjY3LTUuNjctNS42N1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTMwMS4wNCwxMS44MWMtMS41NywwLTIuODMsMS4yNy0yLjgzLDIuODN2Ny40NmwtMTguNS05Ljk1cy0uMDgtLjAzLS4xMS0uMDVjLS4wOS0uMDQtLjE5LS4wOC0uMjktLjEyLS4wOC0uMDMtLjE3LS4wNi0uMjUtLjA4LS4wOS0uMDItLjE4LS4wNC0uMjctLjA1LS4xLS4wMi0uMi0uMDMtLjMtLjAzLS4wNCwwLS4wOC0uMDEtLjEzLS4wMWgwcy0uMDkuMDEtLjEzLjAxYy0uMSwwLS4yLjAxLS4yOS4wMy0uMDkuMDEtLjE4LjAzLS4yNy4wNS0uMDkuMDItLjE3LjA1LS4yNS4wOC0uMDkuMDMtLjE4LjA3LS4yNi4xMS0uMDguMDQtLjE1LjA4LS4yMy4xMy0uMDguMDUtLjE2LjEtLjIzLjE1LS4wNy4wNS0uMTQuMTEtLjIxLjE3LS4wNy4wNi0uMTQuMTMtLjIuMi0uMDYuMDYtLjExLjEzLS4xNy4yLS4wNi4wOC0uMTIuMTctLjE3LjI2LS4wMi4wNC0uMDUuMDctLjA3LjExLS4wMi4wNC0uMDMuMDctLjA1LjExLS4wNS4wOS0uMDguMTktLjEyLjI5LS4wMy4wOC0uMDYuMTctLjA4LjI1LS4wMi4wOS0uMDQuMTgtLjA1LjI3LS4wMi4xLS4wMy4yLS4wMy4zLDAsLjA0LS4wMS4wOC0uMDEuMTJ2NzMuN2MwLDEuNTcsMS4yNywyLjgzLDIuODMsMi44M2gwYzEuNTcsMCwyLjgzLTEuMjcsMi44My0yLjgzVjE5LjM5bDE3LjAxLDkuMTV2NTkuOGMwLDEuNTcsMS4yNywyLjgzLDIuODMsMi44M3MyLjgzLTEuMjcsMi44My0yLjgzVjE0LjY1YzAtMS41Ny0xLjI3LTIuODMtMi44My0yLjgzWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTg0LjgyLDExLjgxaC0xNy4wMWMtMy4xMywwLTUuNjcsMi41NC01LjY3LDUuNjd2NzAuODdjMCwxLjU3LDEuMjcsMi44MywyLjgzLDIuODNzMi44My0xLjI3LDIuODMtMi44M3YtMzEuMzZsMTcuMDEtOS4xNXY0MC41MWMwLDEuNTcsMS4yNywyLjgzLDIuODMsMi44M3MyLjgzLTEuMjcsMi44My0yLjgzVjE3LjQ4YzAtMy4xMy0yLjU0LTUuNjctNS42Ny01LjY3Wk0xODQuODIsMjMuMTV2MTguMjVsLTE3LjAxLDkuMTVWMTcuNDhoMTcuMDF2NS42N1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNC41MSwxMS44MWgtMTcuMDFjLTMuMTMsMC01LjY3LDIuNTQtNS42Nyw1LjY3djY4LjAzaDBjMCwzLjEzLDIuNTQsNS42Nyw1LjY3LDUuNjdoMTcuMDFjMy4xMywwLDUuNjctMi41NCw1LjY3LTUuNjdoMHYtNTEuMDJjMC0zLjEzLTIuNTQtNS42Ny01LjY3LTUuNjdoLTQuMzRsOC41Mi00LjU4Yy45NS0uNTEsMS40OC0xLjQ5LDEuNDgtMi40OWguMDF2LTQuMjZjMC0zLjEzLTIuNTQtNS42Ny01LjY3LTUuNjdaTTIyNC41MSw0MC4xNnY0NS4zNWgtMTcuMDF2LTUxLjAyaDEuNDJzMCwwLDAsMGMwLDAsMCwwLDAsMGgxNS41OHY1LjY3Wk0yMjQuNTEsMjAuMDVsLTE2LjMxLDguNzdoLS43di0xMS4zNGgxNy4wMXYyLjU2WiIvPgogIDwvZz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMjIuMzYsNjMuNGMuMDItLjA5LjA0LS4xOC4wNS0uMjcuMDItLjEuMDMtLjIuMDMtLjMsMC0uMDQuMDEtLjA4LjAxLS4xMiwwLS4wNS0uMDEtLjA5LS4wMS0uMTMsMC0uMS0uMDEtLjItLjAzLS4zLS4wMS0uMDktLjAzLS4xOC0uMDUtLjI3LS4wMi0uMDktLjA1LS4xNy0uMDgtLjI2LS4wMy0uMDktLjA3LS4xOC0uMTEtLjI2LS4wNC0uMDgtLjA4LS4xNi0uMTMtLjIzLS4wNS0uMDgtLjEtLjE2LS4xNS0uMjMtLjA1LS4wNy0uMTEtLjE0LS4xNy0uMjEtLjA2LS4wNy0uMTMtLjEzLS4xOS0uMi0uMDYtLjA2LS4xMy0uMTEtLjItLjE3LS4wOC0uMDYtLjE3LS4xMi0uMjUtLjE3LS4wNC0uMDItLjA3LS4wNS0uMTEtLjA3bC0zOC45My0yMC45NWMtLjg0LS40NS0xLjg1LS40NS0yLjY5LDBsLTIxLjg0LDExLjc1LTEyLjI2LTQzYzUuMDctMS41MiwxMC40My0yLjM1LDE1Ljk5LTIuMzUsMjUuNjgsMCw0Ny44OCwxNy40LDUzLjk3LDQyLjMxLjM3LDEuNTIsMS45LDIuNDUsMy40MywyLjA4LDEuNTItLjM3LDIuNDUtMS45MSwyLjA4LTMuNDNDMTEzLjk5LDE5LjE3LDg5LjUzLDAsNjEuMjMsMGMtNy4wNCwwLTEzLjgsMS4yMS0yMC4xLDMuNDEtLjA1LjAxLS4xLjAxLS4xNC4wMy0uMDIsMC0uMDMuMDEtLjA1LjAyLS4xLjAzLS4yLjA3LS4yOS4xMi0uMDIsMC0uMDMuMDEtLjA1LjAyQzE2Ljk2LDEyLjA4LDAsMzQuNzEsMCw2MS4yM2MwLDguNTIsMS43MiwxNi43Nyw1LjEsMjQuNTEuMTIuMjguMjUuNTUuMzcuODMuMDEuMDMuMDMuMDUuMDQuMDcsMCwuMDEsMCwuMDMuMDIuMDQsNS4wNiw5LjkxLDE1LjQ3LDE2LjMxLDI2LjUsMTYuMzEsMy43MSwwLDcuMzMtLjY4LDEwLjc2LTIuMDIuMDIsMCwuMDQtLjAyLjA1LS4wMi4wMSwwLC4wMiwwLC4wNC0uMDIsMS4xNi0uNDYsMi4zLS45OSwzLjM3LTEuNThsNjAuMDUtMzIuMzJjMy4yMy0xLjUzLDMuNTMtMS41MywxMC4wNi0xLjUuOTYsMCwyLjAzLDAsMy4yNiwwLC4wNCwwLC4wOS0uMDEuMTMtLjAxLjEsMCwuMi0uMDEuMy0uMDMuMDktLjAxLjE4LS4wMy4yNi0uMDUuMDktLjAyLjE3LS4wNS4yNi0uMDguMDktLjAzLjE3LS4wNy4yNi0uMTEuMDgtLjA0LjE2LS4wOC4yMy0uMTMuMDgtLjA1LjE2LS4xLjIzLS4xNS4wNy0uMDUuMTQtLjExLjIxLS4xNy4wNy0uMDYuMTQtLjEzLjItLjIuMDYtLjA2LjExLS4xMy4xNy0uMi4wNi0uMDguMTItLjE3LjE3LS4yNS4wMi0uMDQuMDUtLjA3LjA3LS4xMS4wMi0uMDQuMDMtLjA3LjA1LS4xMS4wNS0uMDkuMDgtLjE5LjEyLS4yOS4wMy0uMDguMDYtLjE3LjA4LS4yNVpNMTAuNiw4NC4xNWMtLjEtLjIzLS4yLS40NS0uMy0uNjgtMy4wNy03LjAyLTQuNjMtMTQuNTEtNC42My0yMi4yNCwwLTIyLjEyLDEzLTQxLjI2LDMxLjc2LTUwLjE5bC0xNy44NSw2Mi41OXMwLDAsMCwwYzAsMCwwLDAsMCwwLDAsLjAyLDAsLjAzLDAsLjA1LS4zOSwxLjQ5LjQ3LDMuMDMsMS45NiwzLjQ1LDAsMCwwLDAsLjAxLDAsOS4wMSwyLjU1LDE1LjY1LDEwLjE1LDE3LjA5LDE5LjI3LTIuMTMuNjEtNC4zNC45Mi02LjYuOTItOC45MSwwLTE3LjMyLTUuMTctMjEuNDMtMTMuMThaTTEwMy44MSw2MS45NXMtLjA4LjA0LS4xMy4wNmwtNTkuMDgsMzEuOHYtMTUuMDZjMC0xLjU3LTEuMjctMi44My0yLjgzLTIuODNzLTIuODMsMS4yNy0yLjgzLDIuODN2NC4wM2MtMy4yOC00LjUxLTcuODEtOC4wOS0xMy4xNy0xMC4xOGwxNi01Ni4xLDEwLjYzLDM3LjI4LTE2Ljg0LDkuMDZjLTEuMzguNzQtMS44OSwyLjQ2LTEuMTUsMy44NC41MS45NSwxLjQ5LDEuNDksMi41LDEuNDkuNDUsMCwuOTEtLjExLDEuMzQtLjM0bDE4LjgxLTEwLjEyczAsMCwuMDEsMGwyMy42My0xMi43MSwyOC4yMSwxNS4xOGMtMS42LjI4LTMuMDEuOC01LjA5LDEuNzlaIi8+Cjwvc3ZnPg=="
+           alt="Ab ins Grüne" width="559" height="103" />
+    </header>
+    <section class="hero">
+      <h1 id="title">Waschtrockner</h1>
+      <p class="subtitle" id="subtitle">Kurzanleitung für Gäste</p>
+    </section>
+
+    <nav class="langs" aria-label="Sprache wählen">
+      <button class="lang-btn active" data-lang="de" lang="de" aria-label="Deutsch">
+        <svg class="lang-flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#000" d="M0 0h60v14H0z"/><path fill="#D00" d="M0 13.333h60v13.334H0z"/><path fill="#FFCE00" d="M0 26.667h60V40H0z"/></svg>
+        <span>DE</span>
+      </button>
+      <button class="lang-btn" data-lang="en" lang="en" aria-label="English">
+        <svg class="lang-flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#012169" d="M0 0h60v40H0z"/><path stroke="#FFF" stroke-width="8" d="m0 0 60 40M60 0 0 40"/><path stroke="#C8102E" stroke-width="3" d="m0 0 60 40M60 0 0 40"/><path fill="#FFF" d="M24 0h12v40H24zM0 14h60v12H0z"/><path fill="#C8102E" d="M27 0h6v40h-6zM0 17h60v6H0z"/></svg>
+        <span>EN</span>
+      </button>
+      <button class="lang-btn" data-lang="fr" lang="fr" aria-label="Français">
+        <svg class="lang-flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#0055A4" d="M0 0h20v40H0z"/><path fill="#FFF" d="M20 0h20v40H20z"/><path fill="#EF4135" d="M40 0h20v40H40z"/></svg>
+        <span>FR</span>
+      </button>
+      <button class="lang-btn" data-lang="nl" lang="nl" aria-label="Nederlands">
+        <svg class="lang-flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#AE1C28" d="M0 0h60v14H0z"/><path fill="#FFF" d="M0 13.333h60v13.334H0z"/><path fill="#21468B" d="M0 26.667h60V40H0z"/></svg>
+        <span>NL</span>
+      </button>
+      <button class="lang-btn" data-lang="es" lang="es" aria-label="Español">
+        <svg class="lang-flag" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><path fill="#AA151B" d="M0 0h60v40H0z"/><path fill="#F1BF00" d="M0 10h60v20H0z"/></svg>
+        <span>ES</span>
+      </button>
+    </nav>
+
+    <details class="card" open>
+      <summary id="washSummary">So startest du einen Waschgang</summary>
+      <div class="details-body">
+      <ol class="steps" id="steps"></ol>
+
+      <div class="notice">
+        <div>💧</div>
+        <div id="notice">Bitte prüfen, dass die Wasserzufuhr geöffnet ist.</div>
+      </div>
+    
+      </div>
+    </details>
+
+    <details class="card">
+      <summary id="programSummary">Welches Programm?</summary>
+      <div class="details-body">
+      <div class="programs" id="programs"></div>
+      <div class="notice">
+        <div>🏷️</div>
+        <div id="labelNotice">Im Zweifel immer das Pflegeetikett der Kleidung beachten.</div>
+      </div>
+    
+      </div>
+    </details>
+
+    <details class="card">
+      <summary id="buttonSummary">Was macht welcher Knopf?</summary>
+      <div class="details-body">
+      <div class="programs" id="buttons"></div>
+    
+      </div>
+    </details>
+
+
+    <details class="card">
+      <summary id="steamSummary">♨️ DAMPF – so funktioniert es</summary>
+      <div class="details-body">
+      <div class="reload-steps" id="steamSteps"></div>
+      <div class="notice">
+        <div>♨️</div>
+        <div id="steamNotice">DAMPF ist nur bei ausgewählten Waschprogrammen verfügbar. Die Bedienungsanleitung nennt keine eindeutige Liste. Leuchtet die Dampfanzeige nach dem Drücken, kann die Funktion mit dem gewählten Programm verwendet werden.</div>
+      </div>
+    
+      </div>
+    </details>
+
+    <details class="card">
+      <summary id="compatSummary">Welche Funktionen passen zu welchem Programm?</summary>
+      <div class="details-body">
+      <div class="compat" id="compat"></div>
+      <div class="notice">
+        <div>ℹ️</div>
+        <div id="compatNotice">Wenn eine Funktion mit dem gewählten Programm nicht kombinierbar ist, lässt sie sich nicht auswählen bzw. wird automatisch deaktiviert. Die Anleitung sagt zur DAMPF-Funktion nur, dass sie bei einigen Programmen verfügbar ist; sie nennt keine programmscharfe Liste. Deshalb wird DAMPF hier bewusst nicht als kompatibel markiert.</div>
+      </div>
+    
+      </div>
+    </details>
+
+    <details class="card">
+      <summary id="reloadSummary">Wäsche nachlegen</summary>
+      <div class="details-body">
+      <div class="reload-steps" id="reloadSteps"></div>
+      <div class="notice">
+        <div>🔒</div>
+        <div id="reloadNotice">Die Tür niemals mit Gewalt öffnen. Nachlegen ist nur möglich, wenn die Türverriegelung erlischt; u. a. muss die Trommeltemperatur unter 50 °C liegen und das Programm darf noch nicht zu weit fortgeschritten sein.</div>
+      </div>
+    
+      </div>
+    </details>
+
+
+    <section class="card" style="text-align:center;border-top:4px solid var(--fichte)">
+      <div class="actions">
+        <a class="btn primary"
+           id="manualBtn"
+           href="https://image.hagebau.de/pdf/12060118.pdf?hl=de-DE"
+           target="_blank"
+           rel="noopener noreferrer">📖 Vollständige Bedienungsanleitung</a>
+      </div>
+    </section>
+
+    <footer id="footer">PKM WT8+5BE Waschtrockner · Kurzinfo für Feriengäste</footer>
+  </main>
+
+<script>
+const copy = {
+  de: {
+    title:"Waschtrockner",
+    subtitle:"Kurzanleitung für Gäste",
+    heading:"So startest du einen Waschgang",
+    notice:"Bitte prüfen, dass die Wasserzufuhr geöffnet ist – auch beim Trocknen.",
+    manual:"📖 Vollständige Bedienungsanleitung",
+    footer:"PKM WT8+5BE Waschtrockner · Kurzinfo für Feriengäste",
+    steps:[
+      ["Wäsche einlegen","Wäsche in die Trommel legen und Waschmittel einfüllen."],
+      ["Gerät einschalten","EIN/AUS drücken."],
+      ["Programm wählen","Mit PROGRAMM das gewünschte Waschprogramm auswählen."],
+      ["Optional anpassen","Bei Bedarf Temperatur oder Schleuderdrehzahl ändern."],
+      ["Trocknen zuschalten","Falls gewünscht TROCKNEN aktivieren. Smart Wash kann nicht mit Trocknen kombiniert werden."],
+      ["Starten","START/PAUSE drücken."],
+      ["Nach Programmende","Bei END etwa 2 Minuten warten, bis die Tür entriegelt."]
+    ]
+  },
+  en: {
+    title:"Washer-dryer",
+    subtitle:"Quick guide for guests",
+    heading:"How to start a wash cycle",
+    notice:"Please make sure the water supply is turned on – also when drying.",
+    manual:"📖 Full user manual",
+    footer:"PKM WT8+5BE washer-dryer · Quick guide for holiday guests",
+    steps:[
+      ["Load laundry","Place the laundry in the drum and add detergent."],
+      ["Switch on","Press ON/OFF."],
+      ["Select programme","Press PROGRAM to choose the desired wash programme."],
+      ["Adjust if needed","Change temperature or spin speed if required."],
+      ["Add drying","If desired, activate DRYING. Smart Wash cannot be combined with drying."],
+      ["Start","Press START/PAUSE."],
+      ["When finished","When END appears, wait about 2 minutes for the door to unlock."]
+    ]
+  },
+  fr: {
+    title:"Lave-linge séchant",
+    subtitle:"Guide rapide pour les voyageurs",
+    heading:"Démarrer un cycle de lavage",
+    notice:"Vérifiez que l’arrivée d’eau est ouverte – également pendant le séchage.",
+    manual:"📖 Manuel complet",
+    footer:"PKM WT8+5BE lave-linge séchant · Guide rapide pour les vacanciers",
+    steps:[
+      ["Charger le linge","Placez le linge dans le tambour et ajoutez la lessive."],
+      ["Allumer","Appuyez sur MARCHE/ARRÊT."],
+      ["Choisir le programme","Appuyez sur PROGRAMME pour sélectionner le cycle souhaité."],
+      ["Ajuster si besoin","Modifiez la température ou l’essorage si nécessaire."],
+      ["Ajouter le séchage","Si souhaité, activez SÉCHAGE. Smart Wash ne peut pas être combiné avec le séchage."],
+      ["Démarrer","Appuyez sur START/PAUSE."],
+      ["À la fin","Lorsque END s’affiche, attendez environ 2 minutes avant d’ouvrir la porte."]
+    ]
+  },
+  nl: {
+    title:"Was-droogcombinatie",
+    subtitle:"Korte handleiding voor gasten",
+    heading:"Zo start je een wasprogramma",
+    notice:"Controleer of de watertoevoer open staat – ook tijdens het drogen.",
+    manual:"📖 Volledige handleiding",
+    footer:"PKM WT8+5BE was-droogcombinatie · Korte info voor vakantiegasten",
+    steps:[
+      ["Wasgoed plaatsen","Doe het wasgoed in de trommel en voeg wasmiddel toe."],
+      ["Inschakelen","Druk op AAN/UIT."],
+      ["Programma kiezen","Druk op PROGRAMMA en kies het gewenste wasprogramma."],
+      ["Indien nodig aanpassen","Pas temperatuur of centrifugetoerental aan."],
+      ["Drogen toevoegen","Activeer indien gewenst DROGEN. Smart Wash kan niet met drogen worden gecombineerd."],
+      ["Starten","Druk op START/PAUZE."],
+      ["Na afloop","Bij END ongeveer 2 minuten wachten tot de deur ontgrendelt."]
+    ]
+  },
+  es: {
+    title:"Lavasecadora",
+    subtitle:"Guía rápida para huéspedes",
+    heading:"Cómo iniciar un ciclo de lavado",
+    notice:"Compruebe que la entrada de agua esté abierta – también durante el secado.",
+    manual:"📖 Manual de usuario completo",
+    footer:"PKM WT8+5BE lavasecadora · Guía rápida para huéspedes",
+    steps:[
+      ["Introducir la ropa","Coloque la ropa en el tambor y añada detergente."],
+      ["Encender","Pulse ENCENDIDO/APAGADO."],
+      ["Elegir programa","Pulse PROGRAMA para seleccionar el ciclo deseado."],
+      ["Ajustar si es necesario","Cambie la temperatura o el centrifugado si lo necesita."],
+      ["Añadir secado","Si lo desea, active SECADO. Smart Wash no puede combinarse con secado."],
+      ["Iniciar","Pulse START/PAUSA."],
+      ["Al finalizar","Cuando aparezca END, espere unos 2 minutos hasta que se desbloquee la puerta."]
+    ]
+  }
+};
+
+const programCopy = {
+  de:{
+    heading:"Die 9 Waschprogramme",
+    label:"Zusätzlich gibt es die separate Taste SMART WASH. Trocknen ist eine Zusatzfunktion des Waschtrockners und kein eigenes Waschprogramm in dieser Programmliste.",
+    items:[
+      ["🌱 Eco 40–60","Baumwolle · bis 8 kg","Für normal verschmutzte Baumwollwäsche, die für 40–60 °C geeignet ist."],
+      ["👕 Mix","Baumwolle + Synthetik · bis 8 kg","Für gemischte, mittelverschmutzte Alltagswäsche."],
+      ["🧺 Baumwolle","Robuste Wäsche · bis 8 kg","Für Baumwolle, Leinen, Handtücher, Unterwäsche und T-Shirts – auch bei stärkerer Verschmutzung."],
+      ["⚡ Schnellwäsche","Leicht verschmutzt · bis 1 kg","Für wenige, nur leicht verschmutzte oder kurz getragene Kleidungsstücke."],
+      ["💧 Schleudern","bis 8 kg","Zum zusätzlichen Schleudern. Kein normales Waschprogramm."],
+      ["🛡️ Hygiene","60–85 °C · bis 3 kg","Für hitzebeständige, farbechte Textilien, z. B. Unterwäsche. Hohe Temperaturen gegen Allergene."],
+      ["❄️ 20 °C","Leicht/empfindlich · bis 2 kg","Energiesparend für wenig getragene, leicht verschmutzte oder empfindlichere Wäsche."],
+      ["🛏️ Bettwäsche","Große Teile · bis 6 kg","Für Bettbezüge, Laken, Vorhänge, Jeans und andere größere oder schwerere Wäschestücke."],
+      ["✨ Trommelreinigung","ohne Wäsche","Reinigungsprogramm für die leere Trommel. Keine Kleidung einfüllen."]
+    ]
+  },
+  en:{
+    heading:"The 9 wash programmes",
+    label:"There is also a separate SMART WASH button. Drying is an additional washer-dryer function, not one of these nine wash programmes.",
+    items:[
+      ["🌱 Eco 40–60","Cotton · up to 8 kg","For normally soiled cotton suitable for washing at 40–60 °C."],
+      ["👕 Mix","Cotton + synthetics · up to 8 kg","For mixed, moderately soiled everyday laundry."],
+      ["🧺 Cotton","Durable laundry · up to 8 kg","For cotton, linen, towels, underwear and T-shirts, including more heavily soiled items."],
+      ["⚡ Quick Wash","Lightly soiled · up to 1 kg","For a small amount of lightly soiled or briefly worn clothing."],
+      ["💧 Spin","up to 8 kg","For additional spinning. Not a normal wash cycle."],
+      ["🛡️ Hygiene","60–85 °C · up to 3 kg","For heat-resistant, colourfast textiles such as underwear. High temperatures help reduce allergens."],
+      ["❄️ 20 °C","Light/delicate · up to 2 kg","Energy-saving programme for lightly worn, lightly soiled or more delicate laundry."],
+      ["🛏️ Bedding","Large items · up to 6 kg","For duvet covers, sheets, curtains, jeans and other larger or heavier items."],
+      ["✨ Drum Clean","empty drum","Cleans the empty drum. Do not put laundry in the machine."]
+    ]
+  },
+  fr:{
+    heading:"Les 9 programmes de lavage",
+    label:"Il existe également une touche SMART WASH séparée. Le séchage est une fonction supplémentaire du lave-linge séchant, pas l’un de ces neuf programmes de lavage.",
+    items:[
+      ["🌱 Eco 40–60","Coton · jusqu’à 8 kg","Pour le coton normalement sale pouvant être lavé entre 40 et 60 °C."],
+      ["👕 Mix","Coton + synthétique · jusqu’à 8 kg","Pour une charge mixte de linge quotidien moyennement sale."],
+      ["🧺 Coton","Linge résistant · jusqu’à 8 kg","Pour coton, lin, serviettes, sous-vêtements et T-shirts, même plus sales."],
+      ["⚡ Lavage rapide","Peu sale · jusqu’à 1 kg","Pour une petite quantité de vêtements peu sales ou peu portés."],
+      ["💧 Essorage","jusqu’à 8 kg","Pour un essorage supplémentaire. Ce n’est pas un cycle de lavage normal."],
+      ["🛡️ Hygiène","60–85 °C · jusqu’à 3 kg","Pour textiles résistants à la chaleur et aux couleurs stables, p. ex. sous-vêtements."],
+      ["❄️ 20 °C","Peu sale/délicat · jusqu’à 2 kg","Programme économique pour le linge peu porté, peu sale ou plus délicat."],
+      ["🛏️ Literie","Grandes pièces · jusqu’à 6 kg","Pour housses de couette, draps, rideaux, jeans et autres pièces grandes ou lourdes."],
+      ["✨ Nettoyage tambour","à vide","Nettoie le tambour vide. Ne mettez pas de linge."]
+    ]
+  },
+  nl:{
+    heading:"De 9 wasprogramma’s",
+    label:"Daarnaast is er een aparte SMART WASH-knop. Drogen is een extra functie van de was-droogcombinatie en geen van deze negen wasprogramma’s.",
+    items:[
+      ["🌱 Eco 40–60","Katoen · tot 8 kg","Voor normaal vuil katoen dat geschikt is voor 40–60 °C."],
+      ["👕 Mix","Katoen + synthetisch · tot 8 kg","Voor gemengde, gemiddeld vuile dagelijkse was."],
+      ["🧺 Katoen","Stevige was · tot 8 kg","Voor katoen, linnen, handdoeken, ondergoed en T-shirts, ook bij sterkere vervuiling."],
+      ["⚡ Snelwas","Licht vuil · tot 1 kg","Voor een kleine hoeveelheid licht vuile of kort gedragen kleding."],
+      ["💧 Centrifugeren","tot 8 kg","Voor extra centrifugeren. Geen normaal wasprogramma."],
+      ["🛡️ Hygiëne","60–85 °C · tot 3 kg","Voor hittebestendig en kleurecht textiel, zoals ondergoed."],
+      ["❄️ 20 °C","Licht/fijn · tot 2 kg","Energiezuinig voor weinig gedragen, licht vuile of fijnere was."],
+      ["🛏️ Beddengoed","Grote stukken · tot 6 kg","Voor dekbedovertrekken, lakens, gordijnen, jeans en andere grote of zware stukken."],
+      ["✨ Trommelreiniging","lege trommel","Reinigt de lege trommel. Geen wasgoed toevoegen."]
+    ]
+  },
+  es:{
+    heading:"Los 9 programas de lavado",
+    label:"Además hay un botón SMART WASH independiente. El secado es una función adicional de la lavasecadora y no uno de estos nueve programas de lavado.",
+    items:[
+      ["🌱 Eco 40–60","Algodón · hasta 8 kg","Para algodón con suciedad normal apto para lavar entre 40 y 60 °C."],
+      ["👕 Mix","Algodón + sintéticos · hasta 8 kg","Para cargas mixtas de ropa diaria con suciedad media."],
+      ["🧺 Algodón","Ropa resistente · hasta 8 kg","Para algodón, lino, toallas, ropa interior y camisetas, incluso con mayor suciedad."],
+      ["⚡ Lavado rápido","Poco sucia · hasta 1 kg","Para una pequeña cantidad de ropa poco sucia o usada durante poco tiempo."],
+      ["💧 Centrifugado","hasta 8 kg","Para centrifugado adicional. No es un ciclo de lavado normal."],
+      ["🛡️ Higiene","60–85 °C · hasta 3 kg","Para tejidos resistentes al calor y de colores sólidos, como ropa interior."],
+      ["❄️ 20 °C","Ligera/delicada · hasta 2 kg","Programa de ahorro para ropa poco usada, poco sucia o más delicada."],
+      ["🛏️ Ropa de cama","Piezas grandes · hasta 6 kg","Para fundas, sábanas, cortinas, vaqueros y otras prendas grandes o pesadas."],
+      ["✨ Limpieza tambor","tambor vacío","Limpia el tambor vacío. No introduzca ropa."]
+    ]
+  }
+};
+
+const buttonCopy = {
+  de:{
+    heading:"Was macht welcher Knopf?",
+    items:[
+      ["⏻  EIN/AUS","Schaltet den Waschtrockner ein oder aus."],
+      ["PROGRAMM","Wechselt durch die 9 Waschprogramme – genau wie auf dem Bedienfeld beschriftet."],
+      ["TEMP.  °C","Ändert die Waschtemperatur. Verfügbare Werte hängen vom Programm ab."],
+      ["DREHZAHL  🔒 3s","Ändert die Schleuderdrehzahl. 3 Sekunden halten: Tastensperre ein/aus."],
+      ["☀  TROCKNEN  ⏱ 3s","Schaltet die Trocknerfunktion zu. Auto-Trocknen oder Zeit-Trocknen (30–240 Min.). 3 Sekunden halten: Startzeitvorwahl."],
+      ["M  SMART WASH / One Touch","Automatikmodus für normale Alltagswäsche bis 5 kg. Gewicht, Temperatur und Waschdauer werden automatisch angepasst. Nicht mit Trocknen kombinierbar."],
+      ["▶⏸  START/PAUSE","Startet oder pausiert das gewählte Programm; damit kann auch das Nachladen eingeleitet werden."],
+      ["DAMPF","Fügt – sofern vom gewählten Programm unterstützt – einen Dampfzyklus hinzu."],
+      ["DISPLAY","Zeigt u. a. Restzeit, Temperatur, Schleuderdrehzahl, Startzeitvorwahl sowie Tür-, Trocknen- und Smart-Wash-Status."]
+    ]
+  },
+  en:{
+    heading:"What does each button do?",
+    items:[
+      ["⏻ ON/OFF","Switches the washer-dryer on or off."],
+      ["PROGRAM","Cycles through the 9 wash programmes."],
+      ["TEMP.","Changes the wash temperature. Available values depend on the selected programme."],
+      ["SPIN SPEED","Changes the spin speed. Hold for 3 seconds: button lock on/off."],
+      ["DRYING","Adds the drying function. Auto Dry or timed drying (30–240 min). Hold for 3 seconds: delayed start."],
+      ["SMART WASH","Automatic mode for normal everyday laundry up to 5 kg. Weight, temperature and wash time are adjusted automatically. Cannot be combined with drying."],
+      ["START/PAUSE","Starts or pauses the selected programme."],
+      ["STEAM","Adds a steam cycle if supported by the selected programme."],
+      ["DISPLAY","Shows remaining time, temperature, spin speed, delayed start and door/drying/Smart Wash status."]
+    ]
+  },
+  fr:{
+    heading:"À quoi sert chaque bouton ?",
+    items:[
+      ["⏻ MARCHE/ARRÊT","Allume ou éteint le lave-linge séchant."],
+      ["PROGRAMME","Fait défiler les 9 programmes de lavage."],
+      ["TEMP.","Modifie la température de lavage selon le programme."],
+      ["ESSORAGE","Modifie la vitesse d’essorage. Maintenir 3 s : verrouillage des touches."],
+      ["SÉCHAGE","Ajoute la fonction séchage. Séchage automatique ou temporisé (30–240 min). Maintenir 3 s : départ différé."],
+      ["SMART WASH","Mode automatique pour le linge quotidien jusqu’à 5 kg. Le poids, la température et la durée sont ajustés automatiquement. Incompatible avec le séchage."],
+      ["START/PAUSE","Démarre ou met en pause le programme sélectionné."],
+      ["VAPEUR","Ajoute un cycle vapeur si le programme sélectionné le permet."],
+      ["ÉCRAN","Affiche notamment le temps restant, la température, l’essorage, le départ différé et les états porte/séchage/Smart Wash."]
+    ]
+  },
+  nl:{
+    heading:"Wat doet elke knop?",
+    items:[
+      ["⏻ AAN/UIT","Schakelt de was-droogcombinatie in of uit."],
+      ["PROGRAMMA","Bladert door de 9 wasprogramma’s."],
+      ["TEMP.","Wijzigt de wastemperatuur. Beschikbare waarden hangen af van het programma."],
+      ["TOERENTAL","Wijzigt het centrifugetoerental. 3 sec. ingedrukt houden: toetsenblokkering."],
+      ["DROGEN","Voegt de droogfunctie toe. Automatisch drogen of tijdgestuurd drogen (30–240 min). 3 sec. ingedrukt houden: uitgestelde start."],
+      ["SMART WASH","Automatische modus voor dagelijkse was tot 5 kg. Gewicht, temperatuur en wastijd worden automatisch aangepast. Niet te combineren met drogen."],
+      ["START/PAUZE","Start of pauzeert het gekozen programma."],
+      ["STOOM","Voegt stoom toe als het gekozen programma dit ondersteunt."],
+      ["DISPLAY","Toont o.a. resterende tijd, temperatuur, toerental, uitgestelde start en deur-/droog-/Smart-Wash-status."]
+    ]
+  },
+  es:{
+    heading:"¿Qué hace cada botón?",
+    items:[
+      ["⏻ ENCENDIDO/APAGADO","Enciende o apaga la lavasecadora."],
+      ["PROGRAMA","Recorre los 9 programas de lavado."],
+      ["TEMP.","Cambia la temperatura de lavado. Los valores disponibles dependen del programa."],
+      ["CENTRIFUGADO","Cambia la velocidad de centrifugado. Mantener 3 s: bloqueo de botones."],
+      ["SECADO","Añade la función de secado. Secado automático o temporizado (30–240 min). Mantener 3 s: inicio diferido."],
+      ["SMART WASH","Modo automático para ropa diaria normal hasta 5 kg. Ajusta automáticamente peso, temperatura y duración. No puede combinarse con secado."],
+      ["START/PAUSA","Inicia o pausa el programa seleccionado."],
+      ["VAPOR","Añade un ciclo de vapor si el programa seleccionado lo permite."],
+      ["PANTALLA","Muestra tiempo restante, temperatura, centrifugado, inicio diferido y estados de puerta/secado/Smart Wash."]
+    ]
+  }
+};
+
+const compatCopy = {
+  de:{
+    heading:"Welche Funktionen passen zu welchem Programm?",
+    notice:"Wenn eine Funktion mit dem gewählten Programm nicht kombinierbar ist, lässt sie sich nicht auswählen bzw. wird automatisch deaktiviert. Die Anleitung sagt zur DAMPF-Funktion nur, dass sie bei einigen Programmen verfügbar ist; sie nennt keine programmscharfe Liste. Deshalb wird DAMPF hier bewusst nicht als kompatibel markiert.",
+    rows:[
+      ["Eco 40–60",["⏱ Startzeit","☀ Trocknen","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],[]],
+      ["Mix",["🌡 Temp. bis 60 °C","↻ Drehzahl bis 1400","⏱ Startzeit","☀ Trocknen","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],[]],
+      ["Baumwolle",["🌡 Temp. bis 60 °C","↻ Drehzahl bis 1400","⏱ Startzeit","☀ Trocknen","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],[]],
+      ["Schnell",["🌡 Temp. bis 40 °C","↻ Drehzahl bis 900","⏱ Startzeit","☀ Trocknen","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],[]],
+      ["Schleudern",["↻ Drehzahl bis 1200","☀ Trocknen","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],["⏱ Startzeit*"]],
+      ["Hygiene",["🌡 Temp. bis 85 °C","↻ Drehzahl bis 1200","⏱ Startzeit","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],["☀ Trocknen"]],
+      ["20 °C",["🌡 Temp. bis 20 °C","↻ Drehzahl bis 900","⏱ Startzeit","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],["☀ Trocknen"]],
+      ["Bettwäsche",["🌡 Temp. bis 60 °C","↻ Drehzahl bis 1200","⏱ Startzeit","➕ Nachladen","🔒 Tastensperre","🔊 Signal"],["☀ Trocknen"]],
+      ["Trommelreinigung",["🔒 Tastensperre","🔊 Signal"],["⏱ Startzeit*","☀ Trocknen","➕ Nachladen"]],
+      ["Smart Wash",["➕ Nachladen","🔒 Tastensperre","🔊 Signal"],["☀ Trocknen","🌡 Temp.","↻ Drehzahl"]]
+    ],
+    star:"* abhängig vom Modell"
+  },
+  en:{
+    heading:"Which functions work with each programme?",
+    notice:"If a function cannot be combined with the selected programme, it cannot be selected or will be switched off automatically. The manual only states that STEAM is available with some programmes and does not provide a programme-by-programme list, so STEAM is deliberately not marked as compatible here.",
+    rows:[
+      ["Eco 40–60",["⏱ Delay","☀ Drying","➕ Reload","🔒 Button lock","🔊 Signal"],[]],
+      ["Mix",["🌡 Temp. up to 60 °C","↻ Spin up to 1400","⏱ Delay","☀ Drying","➕ Reload","🔒 Button lock","🔊 Signal"],[]],
+      ["Cotton",["🌡 Temp. up to 60 °C","↻ Spin up to 1400","⏱ Delay","☀ Drying","➕ Reload","🔒 Button lock","🔊 Signal"],[]],
+      ["Quick",["🌡 Temp. up to 40 °C","↻ Spin up to 900","⏱ Delay","☀ Drying","➕ Reload","🔒 Button lock","🔊 Signal"],[]],
+      ["Spin",["↻ Spin up to 1200","☀ Drying","➕ Reload","🔒 Button lock","🔊 Signal"],["⏱ Delay*"]],
+      ["Hygiene",["🌡 Temp. up to 85 °C","↻ Spin up to 1200","⏱ Delay","➕ Reload","🔒 Button lock","🔊 Signal"],["☀ Drying"]],
+      ["20 °C",["🌡 Temp. up to 20 °C","↻ Spin up to 900","⏱ Delay","➕ Reload","🔒 Button lock","🔊 Signal"],["☀ Drying"]],
+      ["Bedding",["🌡 Temp. up to 60 °C","↻ Spin up to 1200","⏱ Delay","➕ Reload","🔒 Button lock","🔊 Signal"],["☀ Drying"]],
+      ["Drum Clean",["🔒 Button lock","🔊 Signal"],["⏱ Delay*","☀ Drying","➕ Reload"]],
+      ["Smart Wash",["➕ Reload","🔒 Button lock","🔊 Signal"],["☀ Drying","🌡 Temp.","↻ Spin"]]
+    ],
+    star:"* depending on model"
+  },
+  fr:{
+    heading:"Quelles fonctions avec quel programme ?",
+    notice:"Si une fonction n’est pas compatible avec le programme choisi, elle ne peut pas être sélectionnée ou se désactive automatiquement. Le manuel indique seulement que la fonction VAPEUR est disponible avec certains programmes, sans liste précise ; elle n’est donc volontairement pas marquée comme compatible ici.",
+    rows:[
+      ["Eco 40–60",["⏱ Départ différé","☀ Séchage","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],[]],
+      ["Mix",["🌡 Temp. 60 °C max.","↻ Essorage 1400 max.","⏱ Départ différé","☀ Séchage","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],[]],
+      ["Coton",["🌡 Temp. 60 °C max.","↻ Essorage 1400 max.","⏱ Départ différé","☀ Séchage","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],[]],
+      ["Rapide",["🌡 Temp. 40 °C max.","↻ Essorage 900 max.","⏱ Départ différé","☀ Séchage","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],[]],
+      ["Essorage",["↻ Essorage 1200 max.","☀ Séchage","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],["⏱ Départ différé*"]],
+      ["Hygiène",["🌡 Temp. 85 °C max.","↻ Essorage 1200 max.","⏱ Départ différé","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],["☀ Séchage"]],
+      ["20 °C",["🌡 Temp. 20 °C max.","↻ Essorage 900 max.","⏱ Départ différé","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],["☀ Séchage"]],
+      ["Literie",["🌡 Temp. 60 °C max.","↻ Essorage 1200 max.","⏱ Départ différé","➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],["☀ Séchage"]],
+      ["Nettoyage tambour",["🔒 Verrouillage","🔊 Signal"],["⏱ Départ différé*","☀ Séchage","➕ Ajout linge"]],
+      ["Smart Wash",["➕ Ajout linge","🔒 Verrouillage","🔊 Signal"],["☀ Séchage","🌡 Temp.","↻ Essorage"]]
+    ],
+    star:"* selon le modèle"
+  },
+  nl:{
+    heading:"Welke functies werken met welk programma?",
+    notice:"Als een functie niet met het gekozen programma kan worden gecombineerd, kan ze niet worden geselecteerd of wordt ze automatisch uitgeschakeld. De handleiding zegt alleen dat STOOM bij sommige programma’s beschikbaar is en geeft geen programma-voor-programma-overzicht; daarom wordt STOOM hier bewust niet als compatibel gemarkeerd.",
+    rows:[
+      ["Eco 40–60",["⏱ Uitgestelde start","☀ Drogen","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],[]],
+      ["Mix",["🌡 Temp. tot 60 °C","↻ Toerental tot 1400","⏱ Uitgestelde start","☀ Drogen","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],[]],
+      ["Katoen",["🌡 Temp. tot 60 °C","↻ Toerental tot 1400","⏱ Uitgestelde start","☀ Drogen","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],[]],
+      ["Snel",["🌡 Temp. tot 40 °C","↻ Toerental tot 900","⏱ Uitgestelde start","☀ Drogen","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],[]],
+      ["Centrifugeren",["↻ Toerental tot 1200","☀ Drogen","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],["⏱ Uitgestelde start*"]],
+      ["Hygiëne",["🌡 Temp. tot 85 °C","↻ Toerental tot 1200","⏱ Uitgestelde start","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],["☀ Drogen"]],
+      ["20 °C",["🌡 Temp. tot 20 °C","↻ Toerental tot 900","⏱ Uitgestelde start","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],["☀ Drogen"]],
+      ["Beddengoed",["🌡 Temp. tot 60 °C","↻ Toerental tot 1200","⏱ Uitgestelde start","➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],["☀ Drogen"]],
+      ["Trommelreiniging",["🔒 Toetsblokkering","🔊 Signaal"],["⏱ Uitgestelde start*","☀ Drogen","➕ Bijladen"]],
+      ["Smart Wash",["➕ Bijladen","🔒 Toetsblokkering","🔊 Signaal"],["☀ Drogen","🌡 Temp.","↻ Toerental"]]
+    ],
+    star:"* afhankelijk van model"
+  },
+  es:{
+    heading:"¿Qué funciones se pueden combinar con cada programa?",
+    notice:"Si una función no es compatible con el programa elegido, no se podrá seleccionar o se desactivará automáticamente. El manual solo indica que VAPOR está disponible con algunos programas y no ofrece una lista programa por programa; por eso no se marca aquí como compatible.",
+    rows:[
+      ["Eco 40–60",["⏱ Inicio diferido","☀ Secado","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],[]],
+      ["Mix",["🌡 Temp. máx. 60 °C","↻ Centrif. máx. 1400","⏱ Inicio diferido","☀ Secado","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],[]],
+      ["Algodón",["🌡 Temp. máx. 60 °C","↻ Centrif. máx. 1400","⏱ Inicio diferido","☀ Secado","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],[]],
+      ["Rápido",["🌡 Temp. máx. 40 °C","↻ Centrif. máx. 900","⏱ Inicio diferido","☀ Secado","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],[]],
+      ["Centrifugado",["↻ Centrif. máx. 1200","☀ Secado","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],["⏱ Inicio diferido*"]],
+      ["Higiene",["🌡 Temp. máx. 85 °C","↻ Centrif. máx. 1200","⏱ Inicio diferido","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],["☀ Secado"]],
+      ["20 °C",["🌡 Temp. máx. 20 °C","↻ Centrif. máx. 900","⏱ Inicio diferido","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],["☀ Secado"]],
+      ["Ropa de cama",["🌡 Temp. máx. 60 °C","↻ Centrif. máx. 1200","⏱ Inicio diferido","➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],["☀ Secado"]],
+      ["Limpieza tambor",["🔒 Bloqueo","🔊 Señal"],["⏱ Inicio diferido*","☀ Secado","➕ Añadir ropa"]],
+      ["Smart Wash",["➕ Añadir ropa","🔒 Bloqueo","🔊 Señal"],["☀ Secado","🌡 Temp.","↻ Centrifugado"]]
+    ],
+    star:"* según el modelo"
+  }
+};
+
+const reloadCopy = {
+  de:{
+    heading:"Wäsche nachlegen",
+    notice:"Die Tür niemals mit Gewalt öffnen. Nachlegen ist nur möglich, wenn die Türverriegelung erlischt; u. a. muss die Trommeltemperatur unter 50 °C liegen und das Programm darf noch nicht zu weit fortgeschritten sein.",
+    steps:[
+      ["▶⏸","START/PAUSE einmal drücken. Der Wasch- oder Trocknungsvorgang wird unterbrochen."],
+      ["🔒","Etwa 2 Minuten warten. Öffnen Sie erst, wenn das Türschloss-Symbol erlischt."],
+      ["🚪","Tür öffnen und Wäsche nachlegen."],
+      ["🚪","Tür wieder vollständig schließen."],
+      ["▶⏸","START/PAUSE erneut drücken, um das Programm fortzusetzen."]
+    ]
+  },
+  en:{
+    heading:"Reload laundry",
+    notice:"Never force the door open. Reloading is only possible when the door-lock symbol goes out; among other things, the drum temperature must be below 50 °C and the programme must not be too far advanced.",
+    steps:[
+      ["▶⏸","Press START/PAUSE once. The wash or drying cycle pauses."],
+      ["🔒","Wait about 2 minutes. Open only when the door-lock symbol goes out."],
+      ["🚪","Open the door and add laundry."],
+      ["🚪","Close the door completely."],
+      ["▶⏸","Press START/PAUSE again to continue the programme."]
+    ]
+  },
+  fr:{
+    heading:"Ajouter du linge",
+    notice:"Ne forcez jamais la porte. L’ajout n’est possible que lorsque le symbole de verrouillage s’éteint ; la température du tambour doit notamment être inférieure à 50 °C et le programme ne doit pas être trop avancé.",
+    steps:[
+      ["▶⏸","Appuyez une fois sur START/PAUSE pour interrompre le lavage ou le séchage."],
+      ["🔒","Attendez environ 2 minutes. Ouvrez seulement lorsque le symbole de verrouillage s’éteint."],
+      ["🚪","Ouvrez la porte et ajoutez le linge."],
+      ["🚪","Refermez complètement la porte."],
+      ["▶⏸","Appuyez de nouveau sur START/PAUSE pour reprendre."]
+    ]
+  },
+  nl:{
+    heading:"Wasgoed bijladen",
+    notice:"Open de deur nooit met geweld. Bijladen kan alleen wanneer het deurslotsymbool uitgaat; de trommeltemperatuur moet onder 50 °C zijn en het programma mag nog niet te ver gevorderd zijn.",
+    steps:[
+      ["▶⏸","Druk één keer op START/PAUZE. Het was- of droogprogramma pauzeert."],
+      ["🔒","Wacht ongeveer 2 minuten. Open pas wanneer het deurslotsymbool uitgaat."],
+      ["🚪","Open de deur en voeg wasgoed toe."],
+      ["🚪","Sluit de deur volledig."],
+      ["▶⏸","Druk opnieuw op START/PAUZE om verder te gaan."]
+    ]
+  },
+  es:{
+    heading:"Añadir ropa",
+    notice:"No fuerce nunca la puerta. Solo se puede añadir ropa cuando se apaga el símbolo de bloqueo; entre otras condiciones, la temperatura del tambor debe ser inferior a 50 °C y el programa no debe estar demasiado avanzado.",
+    steps:[
+      ["▶⏸","Pulse START/PAUSA una vez. El lavado o secado se interrumpe."],
+      ["🔒","Espere unos 2 minutos. Abra solo cuando se apague el símbolo de bloqueo."],
+      ["🚪","Abra la puerta y añada la ropa."],
+      ["🚪","Cierre completamente la puerta."],
+      ["▶⏸","Pulse START/PAUSA de nuevo para continuar."]
+    ]
+  }
+};
+
+const steamCopy = {
+  de:{
+    heading:"♨️ DAMPF – so funktioniert es",
+    notice:"DAMPF ist nur bei ausgewählten Waschprogrammen verfügbar. Die Bedienungsanleitung nennt keine eindeutige Liste. Leuchtet die Dampfanzeige nach dem Drücken, kann die Funktion mit dem gewählten Programm verwendet werden.",
+    steps:[
+      ["1","Gewünschtes Waschprogramm mit PROGRAMM auswählen."],
+      ["2","DAMPF einmal kurz drücken."],
+      ["♨️","Leuchtet die Dampfanzeige, ist DAMPF für das gewählte Programm verfügbar."],
+      ["▶⏸","START/PAUSE drücken und Programm starten."],
+      ["✓","Der zusätzliche Dampfzyklus hilft, Knitter zu reduzieren und die Wäsche aufzufrischen."]
+    ]
+  },
+  en:{
+    heading:"♨️ STEAM – how to use it",
+    notice:"STEAM is only available with selected wash programmes. The manual does not provide an exact list. If the steam indicator lights up after pressing the button, the function can be used with the selected programme.",
+    steps:[["1","Select the desired wash programme with PROGRAM."],["2","Press STEAM once."],["♨️","If the steam indicator lights up, STEAM is available for the selected programme."],["▶⏸","Press START/PAUSE to start."],["✓","The additional steam cycle helps reduce creasing and refresh the laundry."]]
+  },
+  fr:{
+    heading:"♨️ VAPEUR – utilisation",
+    notice:"La fonction VAPEUR n’est disponible qu’avec certains programmes. Le manuel ne fournit pas de liste précise. Si le voyant vapeur s’allume après avoir appuyé sur la touche, la fonction est disponible.",
+    steps:[["1","Sélectionnez le programme souhaité avec PROGRAMME."],["2","Appuyez une fois sur VAPEUR."],["♨️","Si le voyant vapeur s’allume, la fonction est disponible pour ce programme."],["▶⏸","Appuyez sur START/PAUSE."],["✓","Le cycle vapeur supplémentaire aide à réduire les plis et à rafraîchir le linge."]]
+  },
+  nl:{
+    heading:"♨️ STOOM – zo werkt het",
+    notice:"STOOM is alleen bij geselecteerde wasprogramma’s beschikbaar. De handleiding geeft geen exacte lijst. Als het stoomsymbool na het indrukken oplicht, kan de functie met het gekozen programma worden gebruikt.",
+    steps:[["1","Kies het gewenste wasprogramma met PROGRAMMA."],["2","Druk één keer op STOOM."],["♨️","Licht het stoomsymbool op, dan is STOOM voor dit programma beschikbaar."],["▶⏸","Druk op START/PAUZE om te starten."],["✓","De extra stoomcyclus helpt kreukels te verminderen en de was op te frissen."]]
+  },
+  es:{
+    heading:"♨️ VAPOR – cómo utilizarlo",
+    notice:"VAPOR solo está disponible con determinados programas de lavado. El manual no ofrece una lista exacta. Si el indicador de vapor se ilumina después de pulsar el botón, la función está disponible.",
+    steps:[["1","Seleccione el programa deseado con PROGRAMA."],["2","Pulse VAPOR una vez."],["♨️","Si se ilumina el indicador de vapor, VAPOR está disponible para ese programa."],["▶⏸","Pulse START/PAUSA para iniciar."],["✓","El ciclo de vapor adicional ayuda a reducir las arrugas y refrescar la ropa."]]
+  }
+};
+
+function stepSymbol(symbol){
+  if(symbol !== "▶⏸") return symbol;
+  return '<svg class="start-pause-symbol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M2 4v16l9-8-9-8ZM13 4h3v16h-3zM19 4h3v16h-3z"/></svg>';
+}
+
+function render(lang){
+  const t = copy[lang];
+  document.documentElement.lang = lang;
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("subtitle").textContent = t.subtitle;
+  document.getElementById("washSummary").textContent = t.heading;
+  document.getElementById("notice").textContent = t.notice;
+  document.getElementById("manualBtn").textContent = t.manual;
+  document.getElementById("footer").textContent = t.footer;
+  const pc = programCopy[lang];
+  document.getElementById("programSummary").textContent = pc.heading;
+  document.getElementById("labelNotice").textContent = pc.label;
+  const programs = document.getElementById("programs");
+  programs.innerHTML = "";
+  pc.items.forEach(p=>{
+    const d=document.createElement("div");
+    d.className="program";
+    d.innerHTML=`<div class="program-head"><div class="program-name">${p[0]}</div><div class="program-meta">${p[1]}</div></div><div class="program-desc">${p[2]}</div>`;
+    programs.appendChild(d);
+  });
+  const bc = buttonCopy[lang];
+  document.getElementById("buttonSummary").textContent = bc.heading;
+  const buttons = document.getElementById("buttons");
+  buttons.innerHTML = "";
+  bc.items.forEach(p=>{
+    const d=document.createElement("div");
+    d.className="program";
+    d.innerHTML=`<div class="program-name">${p[0]}</div><div class="program-desc">${p[1]}</div>`;
+    buttons.appendChild(d);
+  });
+
+  const sc = steamCopy[lang];
+  document.getElementById("steamSummary").textContent = sc.heading;
+  document.getElementById("steamNotice").textContent = sc.notice;
+  const steamSteps = document.getElementById("steamSteps");
+  steamSteps.innerHTML = "";
+  sc.steps.forEach(r=>{
+    const d=document.createElement("div");
+    d.className="reload-step";
+    d.innerHTML=`<div class="reload-num">${stepSymbol(r[0])}</div><div>${r[1]}</div>`;
+    steamSteps.appendChild(d);
+  });
+
+  const cc = compatCopy[lang];
+  document.getElementById("compatSummary").textContent = cc.heading;
+  document.getElementById("compatNotice").textContent = cc.notice + " " + cc.star;
+  const compat = document.getElementById("compat");
+  compat.innerHTML = "";
+  cc.rows.forEach(r=>{
+    const row=document.createElement("div");
+    row.className="compat-row";
+    const yes=r[1].map(x=>`<span class="chip">${x}</span>`).join("");
+    const no=r[2].map(x=>`<span class="chip no">✕ ${x}</span>`).join("");
+    row.innerHTML=`<div class="compat-name">${r[0]}</div><div class="chips">${yes}${no}</div>`;
+    compat.appendChild(row);
+  });
+
+  const rc = reloadCopy[lang];
+  document.getElementById("reloadSummary").textContent = rc.heading;
+  document.getElementById("reloadNotice").textContent = rc.notice;
+  const reloadSteps = document.getElementById("reloadSteps");
+  reloadSteps.innerHTML = "";
+  rc.steps.forEach((r,i)=>{
+    const d=document.createElement("div");
+    d.className="reload-step";
+    d.innerHTML=`<div class="reload-num">${stepSymbol(r[0])}</div><div>${r[1]}</div>`;
+    reloadSteps.appendChild(d);
+  });
+
+  const steps = document.getElementById("steps");
+  steps.innerHTML = "";
+  t.steps.forEach((s,i)=>{
+    const li=document.createElement("li");
+    li.innerHTML = `
+      <div class="num">${i+1}</div>
+      <div>
+        <div class="step-title">${s[0]}</div>
+        <div class="step-text">${s[1]}</div>
+      </div>`;
+    steps.appendChild(li);
+  });
+
+  document.querySelectorAll(".lang-btn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.lang===lang);
+  });
+  localStorage.setItem("laundryLang",lang);
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>render(btn.dataset.lang));
+});
+
+const saved = localStorage.getItem("laundryLang");
+const browser = (navigator.language || "de").slice(0,2);
+render(copy[saved] ? saved : (copy[browser] ? browser : "de"));
+</script>
+</body>
+</html>
